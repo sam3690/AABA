@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ../backend
+    container_name: aaba-backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ../backend:/app
+    env_file:
+      - ../.env
+    depends_on:
+      - mongo
+      - postgres
+      - redis
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ../frontend
+    container_name: aaba-frontend
+    volumes:
+      - ../frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: aaba-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+
+  postgres:
+    image: postgres:15
+    container_name: aaba-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: aaba
+      POSTGRES_PASSWORD: aaba123
+      POSTGRES_DB: aaba_db
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: aaba-redis
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: ../backend
+    command: celery -A app.workers.job_tasks worker --loglevel=info
+    volumes:
+      - ../backend:/app
+    depends_on:
+      - backend
+      - redis

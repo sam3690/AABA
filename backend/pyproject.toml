@@ -1,7 +1,7 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = ""Autonomous AI Business Agent backend""
+description = "Autonomous AI Business Agent backend"
 readme = "README.md"
 requires-python = ">=3.13"
 
