@@ -50,11 +50,13 @@ services:
     ports:
       - "6379:6379"
 
-  celery:
-    build: ../backend
-    command: celery -A app.workers.job_tasks worker --loglevel=info
+  celery:   # ✅ now aligned correctly with redis, not inside it
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.celery
+    container_name: aaba-celery
     volumes:
       - ../backend:/app
     depends_on:
-      - backend
       - redis
+      - backend
