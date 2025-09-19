@@ -11,4 +11,4 @@ RUN pip install uv && uv sync --frozen
 COPY . .
 
 # Start Celery worker
-CMD ["celery", "-A", "app.workers.job_tasks", "worker", "--loglevel=info"]
+CMD ["uv","run","celery", "-A", "app.workers.job_tasks", "worker", "--loglevel=info"]
