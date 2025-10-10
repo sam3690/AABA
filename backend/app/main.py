@@ -1,7 +1,13 @@
 from fastapi import FastAPI
+
 from app.api import jobs, monitoring, agents
+from app.core.metrics import instrument_app
+from app.core.observability import setup_tracing
 
 app = FastAPI(title="Autonomous AI Business Agent (AABA)")
+
+setup_tracing("aaba-api")
+instrument_app(app)
 
 # Routers
 app.include_router(jobs.router, prefix="/jobs", tags=["Jobs"])
