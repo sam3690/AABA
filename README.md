@@ -1,4 +1,4 @@
-# Autonomous Autonomous Business Administration (AABA)
+# Autonomous Business Administration (AABA)
 
 An open-source infrastructure scaffold for building autonomous business administration agents. This repository delivers the base services, development tooling, and observability plumbing outlined in the reference architecture.
 
